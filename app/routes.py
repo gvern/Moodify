@@ -1,4 +1,5 @@
 from flask import request, jsonify, current_app as app, send_from_directory
+
 from .auth import get_spotify_client
 from .context import get_user_context
 from .models import fetch_user_top_tracks_features, train_model, recommend_song
@@ -9,7 +10,7 @@ model = train_model(features)
 
 @app.route('/')
 def serve_index():
-    return app.send_static_file('index.html')
+    return send_from_directory(app.static_folder, 'index.html')
 
 @app.route('/recommend', methods=['GET'])
 def recommend():

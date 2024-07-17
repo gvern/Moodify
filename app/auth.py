@@ -3,7 +3,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 SPOTIPY_CLIENT_ID = 'c8beb3fb30c6460387f017117462bbec'
 SPOTIPY_CLIENT_SECRET = 'd5297c9cedac4564861c017063a2c1f7'
-SPOTIPY_REDIRECT_URI = 'http://localhost:3001/callback/'
+SPOTIPY_REDIRECT_URI = 'http://localhost:5000/callback/'
 
 scope = "user-library-read user-top-read playlist-modify-private"
 
