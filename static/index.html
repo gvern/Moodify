@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Recommendation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .song {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Music Recommendation</h1>
+    <button onclick="getRecommendations()">Get Recommendations</button>
+    <div id="recommendations"></div>
+
+    <script>
+        async function getRecommendations() {
+            const response = await fetch('/recommend');
+            const recommendations = await response.json();
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '';
+            recommendations.forEach(song => {
+                const songDiv = document.createElement('div');
+                songDiv.className = 'song';
+                songDiv.innerHTML = `<strong>${song.name}</strong> by ${song.artist}`;
+                recommendationsDiv.appendChild(songDiv);
+            });
+        }
+    </script>
+</body>
+</html>
