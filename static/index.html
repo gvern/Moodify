@@ -2,30 +2,97 @@
 <html>
 <head>
     <title>Music Recommendation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
         }
         .song {
             margin: 10px 0;
         }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1>Music Recommendation</h1>
-    <button onclick="getRecommendations()">Get Recommendations</button>
-    <div id="recommendations"></div>
+    <div class="container">
+        <div class="header">
+            <h1>Music Recommendation</h1>
+            <p>Get the perfect song recommendation for any moment!</p>
+        </div>
+        <form id="recommendationForm">
+            <div class="form-group">
+                <label for="mood">Mood</label>
+                <select class="form-control" id="mood">
+                    <option value="happy">Happy</option>
+                    <option value="sad">Sad</option>
+                    <option value="energetic">Energetic</option>
+                    <option value="calm">Calm</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <select class="form-control" id="location">
+                    <option value="home">Home</option>
+                    <option value="work">Work</option>
+                    <option value="gym">Gym</option>
+                    <option value="party">Party</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="time_of_day">Time of Day</label>
+                <select class="form-control" id="time_of_day">
+                    <option value="morning">Morning</option>
+                    <option value="afternoon">Afternoon</option>
+                    <option value="evening">Evening</option>
+                    <option value="night">Night</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="day_of_week">Day of the Week</label>
+                <select class="form-control" id="day_of_week">
+                    <option value="weekday">Weekday</option>
+                    <option value="weekend">Weekend</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="energy_level">Energy Level</label>
+                <select class="form-control" id="energy_level">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="getRecommendations()">Get Recommendations</button>
+        </form>
+        <div id="recommendations" class="mt-4"></div>
+    </div>
 
     <script>
         async function getRecommendations() {
-            const response = await fetch('/recommend');
+            const mood = document.getElementById('mood').value;
+            const location = document.getElementById('location').value;
+            const time_of_day = document.getElementById('time_of_day').value;
+            const day_of_week = document.getElementById('day_of_week').value;
+            const energy_level = document.getElementById('energy_level').value;
+
+            const response = await fetch(`/recommend?mood=${mood}&location=${location}&time_of_day=${time_of_day}&day_of_week=${day_of_week}&energy_level=${energy_level}`);
             const recommendations = await response.json();
             const recommendationsDiv = document.getElementById('recommendations');
             recommendationsDiv.innerHTML = '';
             recommendations.forEach(song => {
                 const songDiv = document.createElement('div');
                 songDiv.className = 'song';
-                songDiv.innerHTML = `<strong>${song.name}</strong> by ${song.artist}`;
+                songDiv.innerHTML = `<strong>${song.name}</strong> by ${song.artist} - <em>${song.description}</em>`;
                 recommendationsDiv.appendChild(songDiv);
             });
         }

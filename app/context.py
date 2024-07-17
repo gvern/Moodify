@@ -6,5 +6,6 @@ def get_user_context():
         'day_of_week': datetime.datetime.now().weekday(),
         'mood': 'happy',
         'location': 'home',
+        'energy_level': 'medium'
     }
     return context
